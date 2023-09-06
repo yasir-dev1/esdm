@@ -1,0 +1,8 @@
+setup.py
+esdm/__init__.py
+esdm/__main__.py
+esdm.egg-info/PKG-INFO
+esdm.egg-info/SOURCES.txt
+esdm.egg-info/dependency_links.txt
+esdm.egg-info/entry_points.txt
+esdm.egg-info/top_level.txt

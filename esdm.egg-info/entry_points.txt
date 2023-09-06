@@ -1,0 +1,2 @@
+[console_scripts]
+esdm = esdm.__main__:run
