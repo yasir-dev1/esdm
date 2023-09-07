@@ -1,3 +1,4 @@
+README.md
 setup.py
 esdm/__init__.py
 esdm/__main__.py
