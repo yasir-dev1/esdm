@@ -1,16 +1,21 @@
 #!/usr/bin/python3
-
+from getpass import getpass
 import argparse
 import subprocess
 import json
 import os
 
+
 def run():
     # Define command-line arguments
-    parser = argparse.ArgumentParser(description="A tool for managing SSH devices")
-    parser.add_argument("-r", "--remote", help="Specify the name of the remote SSH device")
-    parser.add_argument("-a", "--add", help="Add a new SSH device", action="store_true")
-    parser.add_argument("-l", "--list", help="List all saved SSH devices", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="A tool for managing SSH devices")
+    parser.add_argument(
+        "-r", "--remote", help="Specify the name of the remote SSH device")
+    parser.add_argument(
+        "-a", "--add", help="Add a new SSH device", action="store_true")
+    parser.add_argument(
+        "-l", "--list", help="List all saved SSH devices", action="store_true")
     parser.add_argument("-d", "--delete", help="Delete a saved SSH device")
 
     # Parse the arguments
@@ -40,7 +45,7 @@ def run():
         device_name = input("Enter the device name: ")
         device_ip = input("Enter the IP address: ")
         device_username = input("Enter the username: ")
-        device_password = input("Enter the password: ")
+        device_password = getpass("Enter the password: ")
 
         ssh_devices[device_name] = {
             "ip": device_ip,
@@ -74,13 +79,14 @@ def run():
 
         # Create the SSH connection
         ssh_command = f"sshpass -p {password} ssh {username}@{ ip}"
-        
+
         try:
             subprocess.run(ssh_command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"SSH connection failed: {e}")
     else:
         print("You entered an undefined device name.")
+
 
 if __name__ == "__main__":
     run()
