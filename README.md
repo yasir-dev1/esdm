@@ -2,6 +2,7 @@
 A tool for managing SSH devices.
 
 ## Download
+    pip install sshpass
 
     pip install esdm
 
