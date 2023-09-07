@@ -1,4 +1,4 @@
-# ESDM  Easy-SSH-Device-Manger
+# ESDM  Easy-SSH-Device-Manager
 A tool for managing SSH devices.
 
 ## Download
