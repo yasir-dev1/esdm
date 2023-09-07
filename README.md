@@ -1,6 +1,11 @@
 # ESDM  Easy-SSH-Device-Manger
 A tool for managing SSH devices.
 
+## Download
+
+    pip install esdm
+
+
 ## Usage
 
 Options:
