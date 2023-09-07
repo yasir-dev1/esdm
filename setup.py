@@ -6,7 +6,7 @@ with open("README.md", "r") as readme_file:
 
 setup(
     name="esdm",
-    version="1.0",
+    version="1.5",
     packages=['esdm'],
     description='A easy SSH device manger',
     long_description=long_description,
