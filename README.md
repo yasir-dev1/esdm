@@ -15,6 +15,8 @@ Options:
 * -a, --add Add a new SSH device
 * -l, --list List all saved SSH devices
 * -d, --delete Delete a saved SSH device
+* -e, --edit Edit ssh devices
+* -cp, --copy Copy files betwwen ssh devices with scp
 
 
 ## Examples
