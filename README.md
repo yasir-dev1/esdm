@@ -38,6 +38,13 @@ copy files using scp
     esdm -r remote_device_name -cp source_file.txt
     Enter the destination directory:/home/username
 
+Eddit a  SSH device
+
+    esdm -e mydevice 
+    Enter the new IP address (leave empty to keep existing):new ip
+    Enter the new username (leave empty to keep existing): new user name
+    Enter the new password (leave empty to keep existing): new password
+
 How it works
 
 esdm uses a JSON file to store the SSH devices. The file is located in the home directory of the user who runs the tool. The file is named ~/.SDM/ssh_devices.json.
