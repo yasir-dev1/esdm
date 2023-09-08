@@ -1,13 +1,17 @@
 Metadata-Version: 2.1
 Name: esdm
-Version: 1.5
+Version: 1.8
 Summary: A easy SSH device manger
+Home-page: UNKNOWN
+License: UNKNOWN
+Platform: UNKNOWN
 Description-Content-Type: text/markdown
 
-# ESDM  Easy-SSH-Device-Manger
+# ESDM  Easy-SSH-Device-Manager
 A tool for managing SSH devices.
 
 ## Download
+    sudo apt install sshpass
 
     pip install esdm
 
@@ -39,6 +43,17 @@ Connect to a remote device
 
     esdm -r my_device
 
+copy files using scp
+    esdm -r remote_device_name -cp source_file.txt
+    Enter the destination directory:/home/username
+
+Eddit a  SSH device
+
+    esdm -e mydevice 
+    Enter the new IP address (leave empty to keep existing):new ip
+    Enter the new username (leave empty to keep existing): new user name
+    Enter the new password (leave empty to keep existing): new password
+
 How it works
 
 esdm uses a JSON file to store the SSH devices. The file is located in the home directory of the user who runs the tool. The file is named ~/.SDM/ssh_devices.json.
@@ -57,3 +72,5 @@ If the user specifies the -d option, the tool deletes a saved SSH device from th
 License
 
 esdm is licensed under the MIT License.
+
+
