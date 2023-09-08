@@ -13,6 +13,7 @@ def run():
     parser.add_argument("-l", "--list", help="List all saved SSH devices", action="store_true")
     parser.add_argument("-d", "--delete", help="Delete a saved SSH device")
     parser.add_argument("-cp", "--copy", help="Copy a file using SCP")
+    parser.add_argument("-e","--edit", help="Edit a saved SSH device")
 
     # Parse the arguments
     args = parser.parse_args()
@@ -54,6 +55,21 @@ def run():
         with open(ssh_devices_file, "w") as file:
             json.dump(ssh_devices, file, indent=4)
         print(f"{device_name} has been successfully added.")
+
+    # Edit a saved device
+    elif args.edit:
+        device_to_edit = args.edit
+        if device_to_edit in ssh_devices:
+            print(f"Editing device: {device_to_edit}")
+            device_info = ssh_devices[device_to_edit]
+            device_info["ip"] = input("Enter the new IP address (leave empty to keep existing): ") or device_info["ip"]
+            device_info["username"] = input("Enter the new username (leave empty to keep existing): ") or device_info["username"]
+            device_info["password"] = input("Enter the new password (leave empty to keep existing): ") or device_info["password"]
+            with open(ssh_devices_file, "w") as file:
+                json.dump(ssh_devices, file, indent=4)
+            print(f"{device_to_edit} has been updated.")
+        else:
+            print(f"{device_to_edit} is not a saved device.")
 
     # Delete a saved device
     elif args.delete:
