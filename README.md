@@ -36,7 +36,10 @@ Connect to a remote device
 
     esdm -r my_device
 
-copy files using scp
+
+    
+Copy files using scp
+
     esdm -r remote_device_name -cp source_file.txt
     Enter the destination directory:/home/username
 
