@@ -34,6 +34,10 @@ Connect to a remote device
 
     esdm -r my_device
 
+copy files using scp
+    esdm -r remote_device_name -cp source_file.txt
+    Enter the destination directory:/home/username
+
 How it works
 
 esdm uses a JSON file to store the SSH devices. The file is located in the home directory of the user who runs the tool. The file is named ~/.SDM/ssh_devices.json.
