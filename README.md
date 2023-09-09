@@ -15,6 +15,8 @@ Options:
 * -a, --add Add a new SSH device
 * -l, --list List all saved SSH devices
 * -d, --delete Delete a saved SSH device
+* -e, --edit Edit a saved SSH device
+* -s, --sftp Open SFTP protocol
 
 
 ## Examples
@@ -34,9 +36,6 @@ Connect to a remote device
 
     esdm -r my_device
 
-copy files using scp
-    esdm -r remote_device_name -cp source_file.txt
-    Enter the destination directory:/home/username
 
 Eddit a  SSH device
 
@@ -44,6 +43,9 @@ Eddit a  SSH device
     Enter the new IP address (leave empty to keep existing):new ip
     Enter the new username (leave empty to keep existing): new user name
     Enter the new password (leave empty to keep existing): new password
+
+Open Sftp Protocol
+    esdm -s mydevice
 
 How it works
 

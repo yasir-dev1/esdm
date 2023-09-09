@@ -12,7 +12,7 @@ def run():
     parser.add_argument("-a", "--add", help="Add a new SSH device", action="store_true")
     parser.add_argument("-l", "--list", help="List all saved SSH devices", action="store_true")
     parser.add_argument("-d", "--delete", help="Delete a saved SSH device")
-    parser.add_argument("-cp", "--copy", help="Copy a file using SCP")
+    parser.add_argument("-s", "--sftp", help="Open SFTP protocol")
     parser.add_argument("-e","--edit", help="Edit a saved SSH device")
 
     # Parse the arguments
@@ -83,24 +83,21 @@ def run():
             print(f"{device_to_delete} is not a saved device.")
 
     # Copy a file using SCP
-    elif args.copy:
-        device_name = args.remote
+    elif args.sftp:
+        device_name = args.sftp
         if device_name in ssh_devices:
             device_info = ssh_devices[device_name]
             ip = device_info["ip"]
             username = device_info["username"]
             password = device_info["password"]
-            source_file = args.copy
-            destination = input("Enter the destination directory: ")
 
             # Create the SCP command
-            scp_command = f"sshpass -p {password} scp {source_file} {username}@{ip}:{destination}"
+            scp_command = f"sshpass -p {password} sftp {username}@{ip}"
 
             try:
                 subprocess.run(scp_command, shell=True, check=True)
-                print(f"File {source_file} copied to {device_name}:{destination}")
             except subprocess.CalledProcessError as e:
-                print(f"SCP operation failed: {e}")
+                print(f"There was a problem : {e}")
         else:
             print(f"{device_name} is not a saved device.")
 
