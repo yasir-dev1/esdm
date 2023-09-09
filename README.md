@@ -14,7 +14,7 @@ Options:
 * -r, --remote Specify the name of the remote SSH device
 * -a, --add Add a new SSH device
 * -l, --list List all saved SSH devices
-* -d, --delete Delete a saved SSH device
+* -d, --delete Delete a saved SSH devicedd+
 * -e, --edit Edit a saved SSH device
 * -s, --sftp Open SFTP protocol
 
@@ -35,8 +35,6 @@ Add a new SSH device
 Connect to a remote device
 
     esdm -r my_device
-
-
 Eddit a  SSH device
 
     esdm -e mydevice 
