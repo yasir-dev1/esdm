@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from getpass import getpass
 import argparse
 import subprocess
 import json
@@ -42,7 +43,7 @@ def run():
         device_name = input("Enter the device name: ")
         device_ip = input("Enter the IP address: ")
         device_username = input("Enter the username: ")
-        device_password = input("Enter the password: ")
+        device_password = getpass("Enter the password: ")
 
         ssh_devices[device_name] = {
             "ip": device_ip,
