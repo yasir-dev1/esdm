@@ -1,10 +1,16 @@
 #!/usr/bin/python3
-
 from getpass import getpass
 import argparse
 import subprocess
 import json
 import os
+import bcrypt
+
+def hash_password(password):
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
+def check_password(stored_password, provided_password):
+    return bcrypt.checkpw(provided_password.encode(), stored_password)
 
 def run():
     # Define command-line arguments
@@ -20,7 +26,7 @@ def run():
     args = parser.parse_args()
 
     # Store SSH devices in a JSON file (in the home directory)
-    ssh_devices_file = os.path.expanduser("~/.SDM/ssh_devices.json")
+    ssh_devices_file = os.path.expanduser("~/.esdm/.ssh_devices.json")
 
     # Read the devices or create an empty dictionary
     try:
@@ -45,10 +51,12 @@ def run():
         device_username = input("Enter the username: ")
         device_password = getpass("Enter the password: ")
 
+        hashed_password = hash_password(device_password)
+
         ssh_devices[device_name] = {
             "ip": device_ip,
             "username": device_username,
-            "password": device_password
+            "password": hashed_password.decode()  # Save the hash as a string
         }
 
         # Save the devices to the file (in the home directory)
@@ -65,7 +73,9 @@ def run():
             device_info = ssh_devices[device_to_edit]
             device_info["ip"] = input("Enter the new IP address (leave empty to keep existing): ") or device_info["ip"]
             device_info["username"] = input("Enter the new username (leave empty to keep existing): ") or device_info["username"]
-            device_info["password"] = input("Enter the new password (leave empty to keep existing): ") or device_info["password"]
+            new_password = getpass("Enter the new password (leave empty to keep existing): ")
+            if new_password:
+                device_info["password"] = hash_password(new_password).decode()
             with open(ssh_devices_file, "w") as file:
                 json.dump(ssh_devices, file, indent=4)
             print(f"{device_to_edit} has been updated.")
@@ -90,15 +100,18 @@ def run():
             device_info = ssh_devices[device_name]
             ip = device_info["ip"]
             username = device_info["username"]
-            password = device_info["password"]
+            password = getpass("Enter the password: ")
 
-            # Create the SCP command
-            scp_command = f"sshpass -p {password} sftp {username}@{ip}"
+            if check_password(device_info["password"].encode(), password):
+                # Create the SCP command
+                scp_command = f"sshpass -p {password} sftp {username}@{ip}"
 
-            try:
-                subprocess.run(scp_command, shell=True, check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"There was a problem : {e}")
+                try:
+                    subprocess.run(scp_command, shell=True, check=True)
+                except subprocess.CalledProcessError as e:
+                    print(f"There was a problem : {e}")
+            else:
+                print("Incorrect password.")
         else:
             print(f"{device_name} is not a saved device.")
 
@@ -107,15 +120,18 @@ def run():
         device_info = ssh_devices[args.remote]
         ip = device_info["ip"]
         username = device_info["username"]
-        password = device_info["password"]
+        password = getpass("Enter the password: ")
 
-        # Create the SSH connection
-        ssh_command = f"sshpass -p {password} ssh {username}@{ip}"
-        
-        try:
-            subprocess.run(ssh_command, shell=True, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"SSH connection failed: {e}")
+        if check_password(device_info["password"].encode(), password):
+            # Create the SSH connection
+            ssh_command = f"sshpass -p {password} ssh {username}@{ip}"
+            
+            try:
+                subprocess.run(ssh_command, shell=True, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"SSH connection failed: {e}")
+        else:
+            print("Incorrect password.")
     else:
         print("You entered an undefined device name.")
 
